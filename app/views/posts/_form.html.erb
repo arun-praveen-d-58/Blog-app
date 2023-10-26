@@ -1,0 +1,122 @@
+<div class="wrap">
+
+  <div class="col-5 card shadow p-3 m-3">
+    <h4 class="text-center p-2">Post Details</h4>
+<%= image_tag @post.image.variant(:thumb)  if @post.image.attached? %>
+    <% if @post.image.attached? && !@post.id.nil? %>
+      <div class="card-img-overlay", style="width: 20px; height:20px;">
+      <%= link_to 'X', purge_image_post_path(@post), class: 'btn btn-danger mt-5 fw-bold', data:{turbo_method: :delete}%>
+      </div>
+    <% end %>
+<%= form_with(model:[@topic, @post], remote: true, id: 'postForm' )  do |form|%>
+  <% if @post.errors.any? %>
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+      <h4><%= pluralize(@post.errors.count, "error") %> prohibited this topic from being saved:</h4>
+      <ul>
+        <% @post.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  <% end %>
+  <form >
+    <% if !@post.image.attached? %>
+    <div class="form-group field mb-2">
+      <label for="exampleInputEmail1" class="mb-2">
+        <%= form.label :image %></label>
+      <div>
+      <%= form.file_field :image,  class: "form-control" %>
+
+      </div>
+    </div>
+      <%end %>
+
+
+    <br>
+    <div class="form-group field mb-2">
+      <label for="exampleInputEmail1" class="mb-2"> <%= form.label :name %></label>
+      <%= form.text_field :name,  class: "form-control",  id:"exampleInputEmail1", placeholder: "Enter the name"%>
+    </div>
+    <br>
+    <div class="form-group field mb-2">
+      <label for="exampleInputPassword1" class="mb-2"><%= form.label :caption %></label>
+      <%= form.text_area :caption, class: "form-control", id: "exampleInputPassword1", placeholder: "Enter the description"  %>
+    </div>
+    <br>
+    <div class="form-group field mb-2">
+      <label for="exampleInputPassword1" class="mb-2"><%= form.label :tag %></label>
+      <%=form.fields_for :tag do |f| %>
+        <%= f.text_field :name, placeholder:"Enter the tag name", class: "form-control", id: "exampleInputPassword1"%>
+      <%end%>
+    </div>
+    <br>
+    <div class="form-group field mb-2">
+      <label for="exampleInputPassword1" class="mb-2"> <%= form.label "Choose the tags"  %></label>
+      <%= form.collection_select :tag_ids, Tag.all, :id, :name,{prompt: "Can select multiple tags(ctrl+select)"} ,{multiple: true,  class: "form-control", id: "exampleInputPassword1"} %>
+    </div>
+    <br>
+
+    <div class="d-flex column">
+      <div class="divider m-2 mt-3"></div>
+      <%= form.label "or"%>
+      <div class="divider m-2 mt-3"></div>
+    </div>
+    <br>
+
+      <%= link_to "Create a new tag",new_tag_path, class: "text-decoration-none" %>
+      <br>
+    <br>
+    <%= form.submit "Save",  class: "btn btn-primary btn-lg btn-block", style: 'width: 100%'; %>
+  </form>
+
+<%end %>
+  </div>
+</div>
+
+<script>
+    const postForm = document.getElementById('postForm');
+    postForm.addEventListener("submit", function (event) {
+        event.preventDefault()
+        var formData = new FormData(postForm);
+        for (const [key, value] of formData.entries()) {
+            console.log(`Field name: ${key}, Field value: ${value}`);
+        }
+        var xhr = new XMLHttpRequest();
+        var topicId = <%= @topic!=nil ? @topic.id : 'null' %>
+        var postId = <%= @post!=nil ? @post.id : 'null' %>
+          console.log(topicId)
+
+        url =  topicId != null ?  ('/topics/'+ topicId + '/posts/') : '/posts/';
+        //  var path = (window.location.pathname).toString();
+        root = url
+        if ((window.location.pathname).includes('edit')) {
+            url = url + postId;
+        }
+        console.log(url)
+
+        var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+        xhr.open('POST', url, true);
+        xhr.setRequestHeader('X-CSRF-Token', csrfToken);
+        // xhr.responseType = "json";
+
+        xhr.onreadystatechange = function () {
+            console.log('ready state', xhr.readyState)
+        }
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                const response = xhr.response;
+                console.log(response);
+                alert("Success")
+                window.location.replace(root);
+
+            } else {
+                console.error("Error:", xhr.statusText);
+            }
+        };
+
+        xhr.send(formData);
+    });
+
+</script>

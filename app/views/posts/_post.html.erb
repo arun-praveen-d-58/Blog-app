@@ -1,0 +1,47 @@
+
+<div class="card card shadow" style="width: 20rem;">
+  <% if !post.readers.include?(current_user) %>
+    <strong id=post.id class="status"> Unread</strong>
+  <%end%>
+    <div class="card-title">
+
+      <div class="wrap m-2">
+      <%= image_tag post.image.variant(:thumb)  if post.image.attached?%>
+      </div>
+  <div class="card-body">
+    <h5 class="card-title">
+      <% if !post.readers.include?(current_user) %>
+        <strong style="color: darkgreen">
+          <%=post.name %>
+          <%= !post.topic.nil? ? "(#{post.topic.title})":"" %>
+        </strong>
+
+      <%else%>
+
+        <%=post.name %>
+        <%= !post.topic.nil? ? "(#{post.topic.title})":"" %>
+      <%end %>
+    </h5>
+    <p class="card-text"><%= truncate(post.caption, length:100) %>
+      <% post.tags.each do |tag| %>
+        <%= link_to "##{tag.name}", tag_path(tag),  class: "text-decoration-none"  %>
+      <%end%></p>
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item" > by <strong style="color: dodgerblue"><%=post.user.email%></strong> </li>
+    <li class="list-group-item"><strong><%= ratings = post.rating_average %>
+      </strong> ⭐ </li>
+
+    <li class="list-group-item"><strong><%= post.comments_count%></strong>  comments </li>
+
+  </ul>
+  <div class="card-body">
+    <%= link_to 'View', (@topic.nil? ? post_path(post) :topic_post_path(@topic,post)), class: "btn btn-primary"%>
+
+  </div>
+
+</div>
+  <div class="text-center card-footer text-muted">
+    <%= post.created_at.strftime("%B %d, %Y") %>
+  </div>
+</div>

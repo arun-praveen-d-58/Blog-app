@@ -1,0 +1,29 @@
+<% if !notice.nil? %>
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+  <p><%= notice %></p>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+  <%end %>
+
+
+
+
+<div class="wrap" style="margin-top: 100px">
+<div class="card card shadow text-center col-6" id="<%= dom_id @topic %>">
+  <div class="card-body ">
+    <h5 class="card-title m-3"><%= @topic.title %></h5>
+    <p class="card-text m-3">    <%= @topic.description %></p>
+
+
+    <%= link_to "View Posts", topic_posts_path(@topic) ,class: "btn btn-success" %>
+    <%= link_to "Edit", edit_topic_path(@topic),class: "btn btn-primary " %>
+    <%= link_to "Delete", @topic,data:{turbo_method: :delete, turbo_confirm:"Are you sure?" },class: "btn btn-danger " %>
+
+
+  </div>
+  <div class="card-footer text-muted">
+    <%= time_ago_in_words(@topic.created_at) %> ago
+  </div>
+</div>
+
+</div>

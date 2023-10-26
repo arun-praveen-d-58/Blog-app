@@ -1,0 +1,12 @@
+
+<%= form_with(model: [@topic,@post,comment,@comment_rating]) do |form| %>
+  <%= form.label :"Rate :", class: "fw-bold" %>
+  <%= form.radio_button :ratings, 1, checked: (user_rating == 1 )  %> 1⭐ &nbsp;
+  <%= form.radio_button :ratings, 2, checked: (user_rating == 2 )  %> 2⭐ &nbsp;
+  <%= form.radio_button :ratings, 3, checked: (user_rating == 3 )  %> 3⭐ &nbsp;
+  <%= form.radio_button :ratings, 4, checked: (user_rating == 4 )  %> 4⭐ &nbsp;
+  <%= form.radio_button :ratings, 5, checked: (user_rating == 5 )  %> 5⭐ &nbsp;
+  <%= form.submit "Add", class: "btn btn-primary" %>
+<%end%>
+
+<!--   form.submit "Add", { controller: 'user_comment_ratings', action: 'create', method: 'post' } -->

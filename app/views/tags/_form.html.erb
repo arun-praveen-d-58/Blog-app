@@ -1,0 +1,16 @@
+<div class="wrap">
+
+  <div class="col-5 card shadow p-3 m-3">
+    <h4 class="text-center p-2">Tag name</h4>
+<%= form_with(model: @tag) do |form|%>
+      <%= render 'posts/errors', obj:@tag %>
+      <div class="form-group field mb-2">
+         <%= form.text_field :name,  class: "form-control", placeholder: "Enter the tag name" %>
+        <div class="actions mt-4">
+          <%= form.submit "Save", class: "btn btn-primary btn-lg btn-block", style: 'width: 100%;'%>
+        </div>
+       </div>
+      <% end %>
+
+  </div>
+</div>

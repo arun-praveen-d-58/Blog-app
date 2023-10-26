@@ -1,0 +1,12 @@
+<%= render 'layouts/messages' %>
+<div class="p-3">
+<h4>Edit</h4>
+
+  <div style="height: 15px"></div>
+
+  <%= link_to "Back", @topic.nil? ? posts_path : topic_posts_path(@topic), class: "btn btn-secondary" %>
+  <div style="height: 15px"></div>
+
+<%= render 'posts/form' %>
+
+</div>

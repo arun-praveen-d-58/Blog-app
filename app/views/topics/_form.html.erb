@@ -1,0 +1,40 @@
+<div class="wrap">
+
+  <div class="col-5 card shadow p-3 m-3">
+<h4 class="text-center p-2">Topic Details</h4>
+    <%= form_with(model: topic) do |f| %>
+      <% if topic.errors.any? %>
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+          <h4><%= pluralize(topic.errors.count, "error") %> prohibited this topic from being saved:</h4>
+          <ul>
+            <% topic.errors.each do |error| %>
+              <li><%= error.full_message %></li>
+            <% end %>
+          </ul>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      <% end %>
+      <form>
+        <div class="form-group field mb-4">
+          <label for="exampleInputEmail1" class="mb-2"> <%= f.label :title %></label>
+          <%= f.text_field :title, class: "form-control",  id:"exampleInputEmail1", placeholder: "Enter the title"%>
+        </div>
+        <div class="form-group field mb-4">
+          <label for="exampleInputPassword1" class="mb-2"> <%= f.label :description %></label>
+          <%= f.text_area :description, class: "form-control", id: "exampleInputPassword1", placeholder: "Enter the description" %>
+        </div>
+
+        <div class="actions mb-4">
+          <%= f.submit "Save", class: "btn btn-primary btn-lg btn-block", style: 'width: 100%;' %>
+        </div>
+    <%end %>
+    </form>
+
+  </div>
+
+
+</div>
+
+
+
+

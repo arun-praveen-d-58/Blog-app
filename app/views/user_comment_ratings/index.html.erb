@@ -1,0 +1,35 @@
+<div class="p-4">
+
+<h3>User Comment Ratings</h3>
+<div style="height: 20px"></div>
+<%= link_to 'Back', !@topic.nil? ?topic_post_path(@topic,@post.id.to_i) : post_path(@post.id.to_i), class: "btn btn-secondary" %>
+<div style="height: 30px"></div>
+
+
+
+
+<div class="wrap">
+  <table  class="table ">
+    <thead>
+    <tr>
+
+    <th scope="col">User</th>
+    <th scope="col">Ratings</th>
+    </tr>
+    </thead>
+
+
+    <tbody>
+    <% @user_comment_ratings.each do |rating| %>
+
+    <tr scope="row">
+     <td><p style="color: dodgerblue"><%= rating.user.email%></p></td>
+      <td><p><%=rating.ratings %> ⭐</p> </td>
+    </tr>
+    <%end %>
+
+    </tbody>
+  </table>
+
+</div>
+</div>

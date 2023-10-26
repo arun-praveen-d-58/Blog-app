@@ -1,0 +1,19 @@
+<p style="color: green"><%= notice %></p>
+
+
+<!-- link_to "Sign Out", destroy_user_session_path, method: :delete -->
+
+<h2 class="text-center mt-4">Topics</h2>
+<div class="wrap mt-4" >
+<%= link_to "New topic", new_topic_path, class: "btn btn-outline-primary" %>
+</div>
+<div class="wrap mt-4" id="topics">
+  <% @topics.each do |topic| %>
+    <%= render topic %>
+    <div style="height: 50px"></div>
+  <% end %>
+</div>
+
+
+
+

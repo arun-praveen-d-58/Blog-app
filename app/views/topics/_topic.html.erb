@@ -1,0 +1,11 @@
+
+<div class="card card shadow text-center col-4" id="<%= dom_id topic %>">
+  <div class="card-body">
+    <h5 class="card-title m-3"><%= topic.title %></h5>
+    <p class="card-text m-3">    <%= topic.description %></p>
+    <%= link_to "Show this topic",topic_path(topic),class: "btn btn-primary m-2" %>
+  </div>
+  <div class="card-footer text-muted">
+    <%= time_ago_in_words(topic.created_at) %> ago
+  </div>
+</div>

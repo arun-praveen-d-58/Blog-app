@@ -1,0 +1,7 @@
+
+<%= form_with(model:[@topic,@post,@comment]) do |form|%>
+  <div class="column d-flex">
+    <%= form.text_field :context ,  class: "form-control me-2", id: "exampleInputEmail1",placeholder: "Leave your comments" ,style:"width:50%"%>
+    <%= form.submit @comment.new_record? ? "Add Comment" : "Update Comment" , class: "btn btn-primary"%>
+  </div>
+<% end %>

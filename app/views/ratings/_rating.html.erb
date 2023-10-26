@@ -1,0 +1,11 @@
+<h4>Ratings</h4>
+
+<div style="height:20px"></div>
+<div>
+  <% (5).downto(1).each do |stars| %>
+
+    <p>
+      <strong> <%= stars %> ⭐  :  </strong> <%= @rating_stars[stars] || 0 %>
+    </p>
+  <%end%>
+</div>

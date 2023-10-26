@@ -1,0 +1,21 @@
+<%= render 'layouts/messages' %>
+
+<h2 class="text-center mt-4">Tags</h2>
+<div class="wrap mt-4" >
+
+<div>
+<%= link_to "Create a Tag", new_tag_path, class: "btn btn-outline-primary" %>
+<%= link_to :"Back", topics_path, class: "btn btn-outline-dark"  %>
+</div>
+
+
+
+<div style="height: 35px"></div>
+
+<% @tags.each do |tag|%>
+
+  <%= render tag %>
+  <div style="height: 25px"></div>
+<%end%>
+</div>
+

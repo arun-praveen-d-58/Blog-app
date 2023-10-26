@@ -1,0 +1,8 @@
+<%= form_tag(posts_path, method: "get", id: "date-picker") do %>
+  <%= label_tag "From" %>
+  <%= date_field_tag :from_date, @from_date %>
+  <%= label_tag "To" %>
+  <%= date_field_tag :to_date, @to_date %>
+  <%= submit_tag "Apply" , class: 'btn btn-primary p-1'%>
+<% end %>
+

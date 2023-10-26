@@ -1,0 +1,98 @@
+<%= render 'layouts/messages' %>
+<%= render 'posts/errors', obj: @comment %>
+<div class="card card shadow m-5 p-5">
+  <p><%= link_to "Back", (@topic.nil? ?posts_path(@post):topic_posts_path(@post.topic_id)), class: "btn btn-secondary" %></p>
+  <h1 class="mb-4"><%=@post.name %></h1>
+
+<% if !(@post.readers.include?(current_user)) %>
+  <script>
+      if (!localStorage.getItem('pageReloaded')) {
+          localStorage.setItem('pageReloaded', 'true');
+          location.reload();
+      }
+      else{
+          localStorage.removeItem('pageReloaded');
+      }
+  </script>
+<% end %>
+
+<div class="mb-4">
+<%= image_tag @post.image.variant(:thumb)  if @post.image.attached? %>
+</div>
+
+<p><%=@post.caption %>
+  <% @post.tags.each do |tag| %>
+    <%= link_to "##{tag.name}", tag_path(tag) %>
+  <%end%>
+</p>
+<p>
+  <%if current_user == @post.user %>
+<%= link_to "Edit", (@topic.nil? ?edit_post_path(@post) :edit_topic_post_path(@topic,@post)), class: "btn btn-primary" %>
+
+<%= link_to "Delete", (@topic.nil? ?post_path(@post):topic_post_path(@topic,@post)), data:{turbo_method: :delete, turbo_confirm: "Are you sure to delete this post?"}, class: "btn btn-danger"  %>
+
+<%end %>
+</p>
+<br>
+<%= render partial: 'ratings/form',locals: { user_post_rating: @user_post_rating } %>
+<br>
+  <div class="divider"></div>
+<div style="height:8px"></div>
+
+<%= render 'ratings/rating' %>
+
+
+<div class="divider"></div>
+  <div style="height:8px"></div>
+
+    <h4>Comments (<%=@post.comments_count %>)</h4>
+
+  <div style="height:25px"></div>
+  <%= render 'comments/form' %>
+  <div style="height:50px"></div>
+
+  <ul>
+    <% @post.comments.each do |comment| %>
+      <% if comment.context.to_s.length >= 1 %>
+        <li style="list-style: none">
+
+          <%= render partial: 'comments/comment', locals: { comment: comment } %>
+        </li>
+      <%end %>
+      <div style="height:20px"></div>
+    <% end %>
+  </ul>
+</div>
+
+</div>
+
+
+
+
+</div>
+
+
+<script>
+
+    document.addEventListener("DOMContentLoaded", function() {
+            var xhr = new XMLHttpRequest();
+            var postId =  <%= @post.id%>
+            var url = '/posts/' + postId + '/mark_as_read';
+            var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+            xhr.open("POST",url, true);
+            xhr.setRequestHeader('X-CSRF-Token', csrfToken);
+
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        console.log("Success!!")
+                    } else {
+                        console.log("Failed")
+                    }
+                }
+            };
+            console.log(JSON.stringify({ post_id: postId }))
+            xhr.send(JSON.stringify({ post_id: postId }));
+
+    });
+</script>

@@ -1,0 +1,59 @@
+
+
+<div class="wrap">
+
+  <div class="col-4 card shadow p-3 m-3">
+    <div style="width: 100%; display: flex; justify-content: center; margin:5px">
+    <img style="width: 20%" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSap4Eh9JEqSjqEALpyOjM3cQPLetGujeHXDA&usqp=CAU">
+    </div>
+
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+  <form>
+  <div class="form-group field mb-2">
+    <label for="exampleInputEmail1" class="mb-2"> <%= f.label :email %></label>
+    <%= f.email_field :email, autofocus: true, autocomplete: "email" , class: "form-control",  id:"exampleInputEmail1", placeholder: "Enter email"%>
+    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+  </div>
+  <div class="form-group field mb-4">
+    <label for="exampleInputPassword1" class="mb-2"> <%= f.label :password %></label>
+    <%= f.password_field :password, autocomplete: "current-password", class: "form-control", id: "exampleInputPassword1", placeholder: "Password" %>
+  </div>
+
+
+  <div class="form-group form-check mb-4">
+    <% if devise_mapping.rememberable? %>
+      <div class="form-group form-check field">
+        <%= f.check_box :remember_me , class: "form-check-input", id:"exampleCheck1"%>
+        <label class="form-check-label" for="exampleCheck1">  <%= f.label :remember_me %></label>
+      </div>
+    <% end %>
+  </div>
+
+    <div class="actions mb-4">
+      <%= f.submit "Log in", class: "btn btn-primary btn-lg btn-block", style: 'width: 100%'; %>
+    </div>
+<%end %>
+</form>
+    <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
+      <%= link_to "Forgot your password?", new_password_path(resource_name), class: "text-decoration-none" %><br />
+    <% end %>
+    <div style="display: flex; flex-direction:row;" class="mb-3">
+    <div class="divider "></div>
+      <h6 class="p-1">OR</h6>
+      <div class="divider "></div>
+    </div>
+
+    <div style="width: 100%; display: flex; justify-content: center">
+    <p>Don't have an account <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
+        <%= link_to "Sign up", new_registration_path(resource_name),  class: "text-decoration-none"  %><br />
+      <% end %></p>
+    </div>
+
+  </div>
+
+
+</div>
+
+
+
+
